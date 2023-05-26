@@ -1,16 +1,19 @@
 import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-
+import styles from '../../Estilos/styles';
 
 const Senha = ({navigation}:any) => {
     return (
-        <SafeAreaView style = {style.container}>
-            <View style = {style.textContainer}>
-            <Text>Esqueceu sua senha?{'\n'}
-                Coloque o endereço de e-mail que se cadastrou no aplicativo
-            </Text>
-                <TextInput style = {style.input} placeholder="Digite o e-mail cadastrado"/>
-                <TouchableOpacity style = {style.button}>
-                    <Text>Recuperar senha</Text>
+        <SafeAreaView style = {styles.container}>
+            <View style = {styles.article}>
+                <Text style = {styles.texto1}>
+                    Esqueceu sua senha?{'\n'} 
+                </Text>      
+                <Text style = {styles.textoSimples}>
+                    Coloque o endereço de e-mail que se cadastrou no aplicativo
+                </Text>
+                <TextInput style = {styles.caixaTexto} />
+                <TouchableOpacity style = {styles.botao}>
+                    <Text style = {styles.botaoTexto}>Recuperar</Text>
                 </TouchableOpacity> 
             </View>
 
@@ -19,38 +22,6 @@ const Senha = ({navigation}:any) => {
 
 };
 
-const style = StyleSheet.create ({
-    container : {
-        flex: 1,
-        justifyContent: 'center',
-        paddingHorizontal: 10,
-    },
-    containerTwo : {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignContent: 'center',
-        
-       
-    },
-    textContainer: {
-        padding: 5,
-        marginBottom: 10,
-        textAlign: 'center',
-        justifyContent: 'center',
-      },
-    input : {
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
-    },
-    button: {
-        alignItems: 'center',
-        backgroundColor: '#DDDDDD',
-        padding: 10,
-        margin: 5,
-        marginTop: 30,
-    },
-});
+
 
 export default Senha;

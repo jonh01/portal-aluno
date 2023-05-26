@@ -1,21 +1,24 @@
-import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-
+import styles from '../../Estilos/styles';
 
 const Cadastro = ({navigation}:any) => {
     return (
-        <SafeAreaView style = {style.container}>
-            <View style = {style.textContainer}>
-                <Text>Nome:</Text>
-                <TextInput style = {style.input} placeholder="Nome completo"/>
-                <Text>Data de Nascimento</Text>
-                <TextInput style = {style.input} placeholder="Senha"/>
-                <Text>Telefone</Text>
-                <TextInput style = {style.input} placeholder="99999-9999" keyboardType='numeric'/>
-                <Text>E-mail</Text>
-                <TextInput style = {style.input} placeholder="E-mail"/> 
-                <TouchableOpacity style = {style.button}>
-                    <Text>Cadastrar</Text>
+        <SafeAreaView style = {styles.container}>
+            {/*<View style = {styles.header}>
+                <Image source={require('../logoLivro.png')}/>
+    </View>*/}
+            <View style = {styles.article}>
+                <Text style = {styles.texto1}>Nome:</Text>
+                <TextInput style = {styles.caixaTexto} />
+                <Text style = {styles.texto1}>Data de Nascimento</Text>
+                <TextInput style = {styles.caixaTexto} />
+                <Text style = {styles.texto1}>Telefone</Text>
+                <TextInput style = {styles.caixaTexto}  keyboardType='numeric'/>
+                <Text style = {styles.texto1}>E-mail</Text>
+                <TextInput style = {styles.caixaTexto} /> 
+                <TouchableOpacity style = {styles.botao}>
+                    <Text style ={styles.botaoTexto}>Cadastrar</Text>
                 </TouchableOpacity>                                                                                      
 
             </View>
@@ -24,7 +27,7 @@ const Cadastro = ({navigation}:any) => {
     )
 
 };
-
+/*
 const style = StyleSheet.create ({
     container : {
         flex: 1,
@@ -57,5 +60,5 @@ const style = StyleSheet.create ({
         margin: 5,
     }
 });
-
+*/
 export default Cadastro;
