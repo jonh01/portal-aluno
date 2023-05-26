@@ -1,5 +1,4 @@
 import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
 
 
 const Senha = ({navigation}:any) => {
