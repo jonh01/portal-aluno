@@ -2,17 +2,19 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "../pages/Login";
 import Cadastro from "../pages/Cadastro";
 import  Senha   from "../pages/Senha";
+import { AppTabRoutes } from "./AppTabRoutes";
 
 
 const {Navigator, Screen} = createNativeStackNavigator();
 
-export function AppRoutes(){
+export const LoginRoutes = () => {
     return (
-        <Navigator screenOptions={{headerShown: false}}>
+        <Navigator screenOptions={{headerShown: true, headerTransparent:true, headerStyle:{backgroundColor:'#F8E9B0'}, statusBarColor:'#F8E9B0'}}>
             <Screen 
                 name="home"
                 component={Login}
-                options={{title: 'Pagina Inicial'}}
+                options={{title: 'Pagina Inicial', headerShown:false}}
+                
             />
             <Screen 
                 name="cadastro"

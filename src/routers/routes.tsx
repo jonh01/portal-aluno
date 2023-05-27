@@ -1,10 +1,15 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { AppRoutes } from "./appRoutes";
+import { LoginRoutes } from "./LoginRoutes";
+import { AppTabRoutes } from "./AppTabRoutes";
 
-export function Routes(){
+interface Props {
+    isLoggedIn:boolean
+}
+
+export const Routes = ({isLoggedIn}:Props) => {
     return (
         <NavigationContainer>
-            <AppRoutes />
+            {isLoggedIn ? <AppTabRoutes /> : <LoginRoutes />}
         </NavigationContainer>
     )
 }
