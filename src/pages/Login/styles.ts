@@ -3,13 +3,15 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
     backgroundColor: "#F8E9B0",
-    alignItems: "center",
-    padding: 8,
+  },
+  scrollView:{
+    margin:0,
   },
   header: {
-    marginBottom: 50,
+    padding:50,
+    justifyContent: "center",
+    alignItems: "center",
   },
   logo: {
     width: 150,
@@ -44,11 +46,12 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
   },
   botao: {
-    marginTop: 100,
+    margin: 100,
     width: 150,
     height: 40,
     borderRadius: 5,
     backgroundColor: "#813035",
+    alignSelf: 'center',
     alignItems: "center",
     justifyContent: "center",
   },

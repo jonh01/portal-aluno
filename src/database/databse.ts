@@ -1,4 +1,5 @@
 import * as SQLite from "expo-sqlite";
+import { Usuario } from "../model/Usuario";
 
 const databaseName = "database.db";
 const databaseVersion = "1.0";
@@ -24,11 +25,11 @@ export const initDatabase = () => {
     `CREATE TABLE IF NOT EXISTS usuario(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 nome TEXT,
-                email TEXT UNIQUE,
+                email TEXT UNIQUE COLLATE NOCASE,
                 senha TEXT,
                 telefone TEXT,
                 dt_nasc date,
-                Tipo INTEGER
+                tipo INTEGER
             );`,
     `CREATE TABLE IF NOT EXISTS aluno(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -67,9 +68,19 @@ export const initDatabase = () => {
             );`,
   ];
 
-  db.transaction((tx) => {
+  const insertUsu: Usuario[] = [
+    {
+      nome: "admin",
+      email: "admin@email.com",
+      senha: "admin123",
+      telefone: "(21)99999-9999",
+      dt_nasc: new Date(),
+      tipo: 3,
+    },
+  ];
 
-    console.log('Iniciando BD')
+  db.transaction((tx) => {
+    console.log("Iniciando BD");
 
     // exclua as tabelas
     for (const linha of drops) {
@@ -101,15 +112,38 @@ export const initDatabase = () => {
         [],
         () => {
           console.log(
-            `Tabela ${linha.substring(linha.indexOf("EXISTS") + 7, linha.indexOf("("))} criada com sucesso`);
+            `Tabela ${linha.substring(
+              linha.indexOf("EXISTS") + 7,
+              linha.indexOf("(")
+            )} criada com sucesso`
+          );
         },
         (_, error) => {
           console.log(
-            `Erro ao criar tabela ${linha.substring(linha.indexOf("EXISTS") + 7, linha.indexOf("("))}: ${error}`);
+            `Erro ao criar tabela ${linha.substring(
+              linha.indexOf("EXISTS") + 7,
+              linha.indexOf("(")
+            )}: ${error}`
+          );
           return false;
         }
       );
     }
+    // insere os usuarios pre-programados
+    for (const usu of insertUsu) {
+      tx.executeSql(
+        `INSERT INTO usuario(nome, email, senha, telefone, tipo) values(?, ?, ?, ?, ?);`,
+        [usu.nome, usu.email, usu.senha, usu.telefone, usu.tipo],
+        () => {
+          console.log("Inserindo Usuario: " + usu.nome);
+        },
+        (_, error) => {
+          console.log(`Erro ao inserir usuario ${usu.nome}: `, error);
+          return false;
+        }
+      );
+    }
+
   });
 };
 
