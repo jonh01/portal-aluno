@@ -10,13 +10,14 @@ import {
 import { styles } from "./styles";
 import { useState } from "react";
 import { autenticarUsuario } from "../../services/usuario-service";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({ navigation }: any) => {
   const [usuEmail, SetUsuEmail] = useState("");
   const [usuSenha, SetUsuSenha] = useState("");
 
   const handleLogin = () => {
+    AsyncStorage.setItem('@storage_Key', usuEmail)
     autenticarUsuario(usuEmail, usuSenha).then(() => {
       console.log("Logado com suceeso!");
       navigation.reset({
