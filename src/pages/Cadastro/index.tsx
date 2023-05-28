@@ -19,7 +19,8 @@ const Cadastro = ({ navigation }: any) => {
   const [usuSenha, SetUsuSenha] = useState("");
   const [usuTel, SetUsuTel] = useState("");
   const [usuDate, SetUsuDate] = useState("");
-  const usu:Usuario = {nome:usuNome, email:usuEmail, senha:usuSenha, telefone:usuTel, dt_nasc:usuDate, tipo: 1};
+  
+  const usu:Usuario = {nome:usuNome, email:usuEmail, senha:usuSenha, telefone:usuTel, dt_nasc:usuDate};
   
   
   function Cadastrar (){
