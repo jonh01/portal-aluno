@@ -3,7 +3,7 @@ import { Text, TouchableOpacity, View } from "react-native";
 
 import { styles } from "./styles";
 import { Routes } from "../../routers/routes";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, CommonActions, NavigationAction } from "@react-navigation/native";
 
 
 
@@ -11,15 +11,18 @@ const Personagem = () => {
   const navigation = useNavigation();
   
   const handleLogout = () => {
-    navigation.reset({
-      index:0,
-      routes: [{name : "login"}], 
-    });
+    navigation.dispatch(
+      CommonActions.navigate({
+        name: 'login',
+        params: {},
+      })
+
+    );
   };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.botao} onPress={ handleLogout} >
+      <TouchableOpacity style={styles.botao} onPress={ handleLogout}  >
         <Text style={styles.botaoTexto}> Logout </Text>
       </TouchableOpacity>
 

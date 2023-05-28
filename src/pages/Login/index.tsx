@@ -31,6 +31,8 @@ const Login = ({ navigation }: any) => {
         <ScrollView
           style={styles.scrollView}
           showsVerticalScrollIndicator={false}
+          keyboardDismissMode="none"
+          keyboardShouldPersistTaps="always"
         >
           <View style={styles.header}>
             <Image
