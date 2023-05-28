@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
     marginBottom: 10,
-    marginTop: 40,
+    marginTop: 10,
   },
   caixaTexto: {
     backgroundColor: "#813035",

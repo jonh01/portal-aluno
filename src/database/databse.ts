@@ -13,13 +13,13 @@ const db = SQLite.openDatabase(
 
 export const initDatabase = () => {
   // vetor pra excluir tabelas
-  let drops: string[] = [
+  /*let drops: string[] = [
     `DROP TABLE IF EXISTS conceito;`,
     `DROP TABLE IF EXISTS disciplina;`,
     `DROP TABLE IF EXISTS professor;`,
     `DROP TABLE IF EXISTS aluno;`,
     `DROP TABLE IF EXISTS usuario;`,
-  ];
+  ];*/
 
   let create: string[] = [
     `CREATE TABLE IF NOT EXISTS usuario(
@@ -33,25 +33,15 @@ export const initDatabase = () => {
             );`,
     `CREATE TABLE IF NOT EXISTS aluno(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                nome_curso TEXT,
-                usuario_id INTEGER UNIQUE,
-                FOREIGN KEY (usuario_id) REFERENCES usuario (id)
-                    ON DELETE CASCADE 
-                    ON UPDATE NO ACTION
-            );`,
-    `CREATE TABLE IF NOT EXISTS professor(
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                usuario_id INTEGER UNIQUE,
-                FOREIGN KEY (usuario_id) REFERENCES usuario (id)
-                    ON DELETE CASCADE 
-                    ON UPDATE NO ACTION
+                nome TEXT,
+                cpf INTEGER UNIQUE
             );`,
     `CREATE TABLE IF NOT EXISTS disciplina(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 nome TEXT,
                 nome_materia TEXT,
-                professor_id INTEGER,
-                FOREIGN KEY (professor_id) REFERENCES professor (id)
+                usuario_id INTEGER,
+                FOREIGN KEY (usuario_id) REFERENCES usuario (id)
                     ON DELETE CASCADE 
                     ON UPDATE NO ACTION
             );`,
@@ -71,10 +61,10 @@ export const initDatabase = () => {
   const insertUsu: Usuario[] = [
     {
       nome: "admin",
-      email: "admin@email.com",
+      email: "admin",
       senha: "admin123",
       telefone: "(21)99999-9999",
-      dt_nasc: new Date(),
+      dt_nasc: "new Date()",
       tipo: 3,
     },
   ];
@@ -83,7 +73,7 @@ export const initDatabase = () => {
     console.log("Iniciando BD");
 
     // exclua as tabelas
-    for (const linha of drops) {
+    /*for (const linha of drops) {
       tx.executeSql(
         linha,
         [],
@@ -103,7 +93,7 @@ export const initDatabase = () => {
           return false;
         }
       );
-    }
+    }*/
 
     // cria as tabelas
     for (const linha of create) {
