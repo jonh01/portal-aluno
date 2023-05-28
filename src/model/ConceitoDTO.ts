@@ -1,4 +1,5 @@
-import { Conceito } from "./conceito";
+import { Conceito } from "./Conceito";
+
 
 export interface ConceitoDTO extends Conceito {
     cpf: string;

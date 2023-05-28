@@ -1,6 +1,6 @@
 import db from "../database/databse";
 import { Conceito } from "../model/Conceito";
-import { ConceitoDTO } from "../model/ConseitoDTO";
+import { ConceitoDTO } from "../model/ConceitoDTO";
 
 const table = "conceito"
 
