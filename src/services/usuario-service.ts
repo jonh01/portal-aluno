@@ -8,8 +8,8 @@ export const criarUsuario = (param: Usuario) => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        `INSERT INTO ${table}(nome, email, senha, telefone, tipo, dt_nasc) VALUES (?, ?, ?, ?, ?, ?)`,
-        [param.nome, param.email, param.senha, param.telefone, param.tipo, param.dt_nasc.toString()],
+        `INSERT INTO ${table}(nome, email, senha, telefone, dt_nasc) VALUES (?, ?, ?, ?, ?)`,
+        [param.nome, param.email, param.senha, param.telefone, param.dt_nasc.toString()],
         (_, { rowsAffected, insertId }) => {
           if (rowsAffected > 0) {
             resolve(insertId);

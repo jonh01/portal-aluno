@@ -28,13 +28,13 @@ export const initDatabase = () => {
                 email TEXT UNIQUE COLLATE NOCASE,
                 senha TEXT,
                 telefone TEXT,
-                dt_nasc date,
-                tipo INTEGER
+                dt_nasc date
             );`,
     `CREATE TABLE IF NOT EXISTS aluno(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                cpf INTEGER UNIQUE,
                 nome TEXT,
-                cpf INTEGER UNIQUE
+                email TEXT UNIQUE COLLATE NOCASE
             );`,
     `CREATE TABLE IF NOT EXISTS disciplina(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -64,8 +64,7 @@ export const initDatabase = () => {
       email: "admin",
       senha: "admin123",
       telefone: "(21)99999-9999",
-      dt_nasc: "new Date()",
-      tipo: 3,
+      dt_nasc: new Date()
     },
   ];
 
@@ -122,8 +121,8 @@ export const initDatabase = () => {
     // insere os usuarios pre-programados
     for (const usu of insertUsu) {
       tx.executeSql(
-        `INSERT INTO usuario(nome, email, senha, telefone, tipo) values(?, ?, ?, ?, ?);`,
-        [usu.nome, usu.email, usu.senha, usu.telefone, usu.tipo],
+        `INSERT INTO usuario(nome, email, senha, telefone) values(?, ?, ?, ?);`,
+        [usu.nome, usu.email, usu.senha, usu.telefone],
         () => {
           console.log("Inserindo Usuario: " + usu.nome);
         },

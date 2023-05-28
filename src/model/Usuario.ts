@@ -4,7 +4,6 @@ export interface Usuario {
     email: string,
     senha: string,
     telefone: string,
-    dt_nasc: string,
-    tipo: number,
+    dt_nasc: Date;
 }
   

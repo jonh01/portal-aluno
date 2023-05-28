@@ -2,8 +2,7 @@ import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
 import { styles } from "./styles";
-import { Routes } from "../../routers/routes";
-import { useNavigation, CommonActions, NavigationAction } from "@react-navigation/native";
+import { useNavigation, CommonActions } from "@react-navigation/native";
 
 
 
