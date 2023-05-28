@@ -17,9 +17,10 @@ const Login = ({ navigation }: any) => {
   const [usuSenha, SetUsuSenha] = useState("");
 
   const handleLogin = () => {
-    AsyncStorage.setItem('@storage_Key', usuEmail)
+    
     autenticarUsuario(usuEmail, usuSenha).then(() => {
-      console.log("Logado com suceeso!");
+      AsyncStorage.setItem('@storage_Key', usuEmail).catch(error => console.log("Erro ao guardar email"));
+      console.log("Logado com sucesso!");
       navigation.reset({
         index:0,
         routes: [{name:"main"}], 
