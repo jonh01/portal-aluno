@@ -12,9 +12,9 @@ export const TrocarSenha = (email: string, dt_nasc: string) => {
           (_, { rows }) => {
             if (rows.length > 0) {
               resolve(rows.item(0));
-              `UPDATE  ${table} SET senha = ? where email =?`
-              ["123"], [email];
-              console.log("Senha alterada!")
+              `UPDATE ${table} SET senha = ? WHERE id = ?` 
+              [123], [email]
+              console.log("Senha alterada!");
             } else {
               reject(new Error('Usuário não encontrado'));
             }
