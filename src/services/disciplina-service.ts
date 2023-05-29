@@ -14,7 +14,7 @@ export const CriarDisciplina = (param: Disciplina) => {
           if (rowsAffected > 0) {
             resolve(insertId);
           } else {
-            reject(new Error('Falha ao criar usuário'));
+            reject(new Error('Falha ao criar disciplina'));
           }
         },
         (_, error) => {

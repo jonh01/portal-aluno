@@ -13,13 +13,14 @@ const db = SQLite.openDatabase(
 
 export const initDatabase = () => {
   // vetor pra excluir tabelas
-  /*let drops: string[] = [
+let drops: string[] = [
     `DROP TABLE IF EXISTS conceito;`,
     `DROP TABLE IF EXISTS disciplina;`,
     `DROP TABLE IF EXISTS professor;`,
     `DROP TABLE IF EXISTS aluno;`,
     `DROP TABLE IF EXISTS usuario;`,
-  ];*/
+  ];
+
 
   let create: string[] = [
     `CREATE TABLE IF NOT EXISTS usuario(
@@ -28,7 +29,7 @@ export const initDatabase = () => {
                 email TEXT UNIQUE COLLATE NOCASE,
                 senha TEXT,
                 telefone TEXT,
-                dt_nasc date
+                dt_nasc TEXT
             );`,
     `CREATE TABLE IF NOT EXISTS aluno(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -64,7 +65,7 @@ export const initDatabase = () => {
       email: "admin",
       senha: "admin123",
       telefone: "(21)99999-9999",
-      dt_nasc: "22021997"
+      dt_nasc: new Date(),
     },
   ];
 
@@ -72,7 +73,7 @@ export const initDatabase = () => {
     console.log("Iniciando BD");
 
     // exclua as tabelas
-    /*for (const linha of drops) {
+    for (const linha of drops) {
       tx.executeSql(
         linha,
         [],
@@ -92,7 +93,7 @@ export const initDatabase = () => {
           return false;
         }
       );
-    }*/
+    }
 
     // cria as tabelas
     for (const linha of create) {
@@ -121,8 +122,8 @@ export const initDatabase = () => {
     // insere os usuarios pre-programados
     for (const usu of insertUsu) {
       tx.executeSql(
-        `INSERT INTO usuario(nome, email, senha, telefone) values(?, ?, ?, ?);`,
-        [usu.nome, usu.email, usu.senha, usu.telefone],
+        `INSERT INTO usuario(nome, email, senha, telefone, dt_nasc) values(?, ?, ?, ?, ?);`,
+        [usu.nome, usu.email, usu.senha, usu.telefone, usu.dt_nasc.toString()],
         () => {
           console.log("Inserindo Usuario: " + usu.nome);
         },

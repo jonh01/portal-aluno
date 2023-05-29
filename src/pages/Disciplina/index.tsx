@@ -6,9 +6,11 @@ import { Text, TextInput, View, Image, TouchableOpacity, FlatList } from 'react-
 import { CriarDisciplina } from '../../services/disciplina-service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Disciplina } from '../../model/Disciplina';
+import ExpoStatusBar from 'expo-status-bar/build/ExpoStatusBar';
  
 
 const DisciplinaView = () => {
+  
   const [disNome, SetDescNome] = useState("");
   const value = '';
   const getData = async () => {
@@ -30,6 +32,7 @@ const DisciplinaView = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+
       <View>
       <View style={styles.header}>
         <Image style={styles.logo} source={require("../../assets/logo.png")} />

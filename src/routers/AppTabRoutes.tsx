@@ -1,20 +1,45 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import React from 'react';
-import Disciplina from '../pages/Disciplina';
 import Personagem from '../pages/Personagem';
+import DisciplinaView from '../pages/Disciplina';
 
-const { Navigator, Screen } = createBottomTabNavigator();
+const { Navigator, Screen } = createMaterialBottomTabNavigator();
+
+const DisciplinaIcon = ({ color }:any) => (
+  <MaterialCommunityIcons name="book" color={color} size={40} />
+);
+
+const PersonagemIcon = ({ color }:any) => (
+  <MaterialCommunityIcons name="account" color={color} size={40} />
+);
 
 export const AppTabRoutes = () => {
   return (
-    <Navigator initialRouteName='personagem'>
+    <Navigator
+      initialRouteName='personagem'
+      activeColor="#F8E9B0"
+      inactiveColor="#f8f8f8"
+      shifting={true}
+      labeled={false}
+      barStyle={{ backgroundColor: '#813035', justifyContent:'center' }}
+    >
         <Screen
             name="disciplina"
-            component={Disciplina}
+            component={DisciplinaView}
+
+            options={{
+              tabBarLabel: 'Disciplinas',
+              tabBarIcon: DisciplinaIcon,
+            }}
         />
         <Screen 
             name="personagem"
             component={Personagem}
+            options={{
+              tabBarLabel: 'Perfil',
+              tabBarIcon: PersonagemIcon,
+            }}
         />
     </Navigator>
   );

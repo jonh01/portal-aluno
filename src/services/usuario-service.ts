@@ -34,7 +34,15 @@ export const buscarUsuario = (email: string) => {
         [email],
         (_, { rows }) => {
           if (rows.length > 0) {
-            resolve(rows.item(0));
+            const usu:Usuario = {
+              id: rows.item(0).id , 
+              nome: rows.item(0).nome, 
+              email: rows.item(0).email, 
+              telefone: rows.item(0).telefone,
+              dt_nasc: new Date(rows.item(0).dt_nasc), 
+              senha: rows.item(0).senha
+            }
+            resolve(usu);
           } else {
             reject(new Error('Usuário não encontrado'));
           }
