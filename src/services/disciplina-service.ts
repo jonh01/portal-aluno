@@ -19,9 +19,10 @@ export const CriarDisciplina = (param: Disciplina) => {
         },
         (_, error) => {
           reject(error);
-          return true;
+          return true; 
         }
       );
     });
   });
 };
+

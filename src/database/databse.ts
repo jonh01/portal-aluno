@@ -64,7 +64,7 @@ export const initDatabase = () => {
       email: "admin",
       senha: "admin123",
       telefone: "(21)99999-9999",
-      dt_nasc: "new Date()"
+      dt_nasc: "22021997"
     },
   ];
 

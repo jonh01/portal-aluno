@@ -6,9 +6,9 @@ import { Text, TextInput, View, Image, TouchableOpacity, FlatList } from 'react-
 import { CriarDisciplina } from '../../services/disciplina-service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Disciplina } from '../../model/Disciplina';
+ 
 
-
-const disciplina = () => {
+const DisciplinaView = () => {
   const [disNome, SetDescNome] = useState("");
   const value = '';
   const getData = async () => {
@@ -55,4 +55,4 @@ const disciplina = () => {
   );
 }
 
-export default disciplina;
+export default DisciplinaView;
