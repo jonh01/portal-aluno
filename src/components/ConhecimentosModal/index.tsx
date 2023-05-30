@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Alert, FlatList, ScrollView, View } from "react-native";
+import { Alert, FlatList, ScrollView, StatusBar, View } from "react-native";
 
 import { styles } from "./styles";
 import { Button, IconButton, Text, TextInput } from "react-native-paper";
@@ -95,6 +95,7 @@ const ConhecimentosModal = ({ disc_id, onClose }: Props) => {
 
   return (
     <View>
+      <StatusBar hidden={true} animated />
       <IconButton
         style={styles.buttonExit}
         icon="close"

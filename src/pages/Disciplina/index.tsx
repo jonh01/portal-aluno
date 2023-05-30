@@ -156,6 +156,7 @@ const DisciplinaView = () => {
         <Modal
           visible={visibleModal}
           onDismiss={Closemodal}
+          dismissable={false}
           contentContainerStyle={styles.modal}
           children={<ConhecimentosModal disc_id={disId} onClose={Closemodal} />}
         />

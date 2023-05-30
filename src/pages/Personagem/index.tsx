@@ -176,6 +176,7 @@ const Personagem = () => {
           onDismiss={modal}
           contentContainerStyle={styles.modal}
         >
+          <StatusBar hidden={true} animated />
           <Text style={styles.texto1}>Nova senha</Text>
           <TextInput
             style={styles.caixaTexto}

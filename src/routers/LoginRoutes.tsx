@@ -10,7 +10,7 @@ const {Navigator, Screen} = createNativeStackNavigator();
 
 export const LoginRoutes = () => {
     return (
-        <Navigator screenOptions={{headerShown: true, headerTransparent:true, headerStyle:{backgroundColor:'#F8E9B0'}, statusBarColor:'#F8E9B0'}}>
+        <Navigator screenOptions={{headerShown: true, headerTransparent:true, headerStyle:{backgroundColor:'#F8E9B0'}, statusBarColor:'auto'}}>
             <Screen 
                 name="login"
                 component={Login}
