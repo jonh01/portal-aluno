@@ -46,7 +46,8 @@ const Personagem = () => {
         const value = await AsyncStorage.getItem("@storage_Key");
         if (value != null) {
           const usu = await buscarUsuario(value);
-          console.log("date usu: ", usu.dt_nasc);
+          setUsuLogado(usu ?? "");
+          console.log("usu: ", usu);
         }
       } catch (e) {
         console.log("erro usu: ", e);
