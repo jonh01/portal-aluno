@@ -7,22 +7,21 @@ import DisciplinaView from '../pages/Disciplina';
 const { Navigator, Screen } = createMaterialBottomTabNavigator();
 
 const DisciplinaIcon = ({ color }:any) => (
-  <MaterialCommunityIcons name="book" color={color} size={40} />
+  <MaterialCommunityIcons name="book" color={color} size={30} />
 );
 
 const PersonagemIcon = ({ color }:any) => (
-  <MaterialCommunityIcons name="account" color={color} size={40} />
+  <MaterialCommunityIcons name="account" color={color} size={30} />
 );
 
 export const AppTabRoutes = () => {
   return (
     <Navigator
       initialRouteName='personagem'
-      activeColor="#F8E9B0"
+      activeColor="#caad37"
       inactiveColor="#f8f8f8"
       shifting={true}
-      labeled={false}
-      barStyle={{ backgroundColor: '#813035', justifyContent:'center' }}
+      barStyle={{ backgroundColor: '#813035', justifyContent:'center', height:60, }}
     >
         <Screen
             name="disciplina"

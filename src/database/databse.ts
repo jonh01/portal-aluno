@@ -42,7 +42,7 @@ export const initDatabase = () => {
     `CREATE TABLE IF NOT EXISTS conceito(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 nome TEXT,
-                email TEXT UNIQUE COLLATE NOCASE,
+                email TEXT COLLATE NOCASE,
                 av1 REAL ,
                 av2 REAL ,
                 disciplina_id INTEGER,
