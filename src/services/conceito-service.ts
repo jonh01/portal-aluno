@@ -1,6 +1,5 @@
 import db from "../database/databse";
 import { Conceito } from "../model/conceito";
-import { ConceitoDTO } from "../model/ConceitoDTO";
 
 const table = "conceito"
 
@@ -8,8 +7,8 @@ export const criarConceito = (param: Conceito) => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        `INSERT INTO ${table}(aluno_id, disciplina_id, av1, av2) VALUES (?, ?, ?, ?)`,
-        [param.aluno_id, param.disciplina_id, param.av1, param.av2],
+        `INSERT INTO ${table}(nome, email, av1, av2, disciplina_id) VALUES (?, ?, ?, ?, ?)`,
+        [param.nome, param.email, param.av1, param.av2, param.disciplina_id],
         (_, { rowsAffected, insertId }) => {
           if (rowsAffected > 0) {
             resolve(insertId);
@@ -26,12 +25,12 @@ export const criarConceito = (param: Conceito) => {
   });
 };
 
-export const buscarConceito = (aluno_id:number, disciplina_id:number) => {
+export const buscarConceito = (id:number) => {
   return new Promise<Conceito>((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        `SELECT * FROM ${table} WHERE aluno_id = ? AND disciplina_id = ?`,
-        [aluno_id, disciplina_id],
+        `SELECT * FROM ${table} WHERE id = ?`,
+        [id],
         (_, { rows }) => {
           if (rows.length > 0) {
             resolve(rows.item(0));
@@ -56,10 +55,12 @@ export const buscarConceitosDisci = (disciplina_id:number) => {
           [disciplina_id],
           (_, { rows }) => {
             const conseitos:Conceito[] = rows._array.map((row) => ({
-              aluno_id: row.aluno_id,
-              disciplina_id: row.disciplina_id,
+              id: row.id,
+              nome: row.nome, 
+              email: row.email,
               av1: row.av1,
               av2: row.av2,
+              disciplina_id: row.disciplina_id,
             }));
             resolve(conseitos);
           },
@@ -76,8 +77,8 @@ export const atualizarConceito = (param: Conceito) => {
   return new Promise<void>((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        `UPDATE ${table} SET av1 = ?, av2 = ? WHERE aluno_id = ? AND disciplina_id = ?`,
-        [param.av1, param.av2, param.aluno_id, param.disciplina_id],
+        `UPDATE ${table} SET email = ?, av1 = ?, av2 = ? WHERE id = ?`,
+        [param.email, param.av1, param.av2, param.id!],
         (_, { rowsAffected }) => {
           if (rowsAffected > 0) {
             resolve();
@@ -94,12 +95,12 @@ export const atualizarConceito = (param: Conceito) => {
   });
 };
 
-export const deletarConceito = (aluno_id:number, disciplina_id:number) => {
+export const deletarConceito = (id:number) => {
   return new Promise<void>((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        `DELETE FROM ${table} WHERE aluno_id = ? AND disciplina_id = ?`,
-        [aluno_id, disciplina_id],
+        `DELETE FROM ${table} WHERE id = ?`,
+        [id],
         (_, { rowsAffected }) => {
           if (rowsAffected > 0) {
             resolve();

@@ -9,11 +9,10 @@ export const styles = StyleSheet.create({
     padding: 8,
   },
   modal: {
-    padding: 35,
-    justifyContent: "center",
-    backgroundColor: "#F8E9B0",
-    marginHorizontal: 25,
+    backgroundColor: 'white',
+    marginHorizontal: 15,
     borderRadius: 10,
+    maxHeight: 600,
   },
   header: {
     paddingTop:50,
@@ -36,6 +35,12 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 10,
     marginTop: 10,
+  },
+  textListEmpy: {
+    fontWeight: "bold",
+    fontSize: 20,
+    paddingTop: 100,
+    alignSelf: "center",
   },
   textoflat: {
     fontWeight: "bold",

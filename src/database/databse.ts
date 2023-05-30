@@ -17,7 +17,6 @@ export const initDatabase = () => {
     `DROP TABLE IF EXISTS conceito;`,
     `DROP TABLE IF EXISTS disciplina;`,
     `DROP TABLE IF EXISTS professor;`,
-    `DROP TABLE IF EXISTS aluno;`,
     `DROP TABLE IF EXISTS usuario;`,
   ];*/
 
@@ -31,12 +30,6 @@ export const initDatabase = () => {
                 telefone TEXT,
                 dt_nasc TEXT
             );`,
-    `CREATE TABLE IF NOT EXISTS aluno(
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                cpf INTEGER UNIQUE,
-                nome TEXT,
-                email TEXT UNIQUE COLLATE NOCASE
-            );`,
     `CREATE TABLE IF NOT EXISTS disciplina(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 nome TEXT,
@@ -47,12 +40,12 @@ export const initDatabase = () => {
                     ON UPDATE NO ACTION
             );`,
     `CREATE TABLE IF NOT EXISTS conceito(
-                aluno_id INTEGER,
-                disciplina_id INTEGER,
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                nome TEXT,
+                email TEXT UNIQUE COLLATE NOCASE,
                 av1 REAL ,
                 av2 REAL ,
-                PRIMARY KEY (aluno_id, disciplina_id),
-                FOREIGN KEY (aluno_id) REFERENCES aluno (id),
+                disciplina_id INTEGER,
                 FOREIGN KEY (disciplina_id) REFERENCES disciplina (id)
                     ON DELETE CASCADE 
                     ON UPDATE NO ACTION
@@ -65,7 +58,7 @@ export const initDatabase = () => {
       email: "admin",
       senha: "admin123",
       telefone: "(21)99999-9999",
-      dt_nasc: new Date(),
+      dt_nasc: converter('29/05/2023'),
     },
   ];
 
@@ -135,6 +128,14 @@ export const initDatabase = () => {
     }
 
   });
+};
+
+const converter = (data: string) => {
+  const partes = data.split("/");
+  const dia = parseInt(partes[0], 10);
+  const mes = parseInt(partes[1], 10) - 1; // Os meses no JavaScript são baseados em zero
+  const ano = parseInt(partes[2], 10);
+  return new Date(ano, mes, dia);
 };
 
 export default db;

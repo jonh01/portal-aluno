@@ -1,8 +1,15 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styles } from "./styles";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Text, TextInput, View, Image, TouchableOpacity } from "react-native";
+import {
+  Text,
+  TextInput,
+  View,
+  Image,
+  TouchableOpacity,
+  FlatList,
+  Alert,
+} from "react-native";
 import {
   CriarDisciplina,
   buscarDisciplinasUser,
@@ -10,24 +17,30 @@ import {
 } from "../../services/disciplina-service";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Disciplina } from "../../model/Disciplina";
-import { ScrollView } from "react-native";
 import { Usuario } from "../../model/Usuario";
 import { buscarUsuario } from "../../services/usuario-service";
-import { FlatList } from "react-native";
 import DisciplinaComp from "../../components/DisciplinaComp";
+import ConhecimentosModal from "../../components/ConhecimentosModal";
 import { Modal, Portal } from "react-native-paper";
-import { Alert } from "react-native";
+
+const listEmpy = () => <Text style={styles.textListEmpy}>Lista Vazia</Text>;
 
 const DisciplinaView = () => {
   const [usuLogado, setUsuLogado] = useState<Usuario>();
 
   const [disNome, SetDescNome] = useState("");
+  const [disId, SetDisId] = useState(0);
   const [disciplinas, SetDisciplinas] = useState<Disciplina[]>([]);
 
   const [visibleModal, setVisibleModal] = React.useState(false);
 
-  const modal = () => {
+  const Openmodal = (id: number) => {
+    SetDisId(id);
     setVisibleModal(!visibleModal);
+  };
+
+  const Closemodal = () => {
+    setVisibleModal(false);
   };
 
   useEffect(() => {
@@ -37,40 +50,51 @@ const DisciplinaView = () => {
         if (value != null) {
           const usu = await buscarUsuario(value);
           setUsuLogado(usu ?? "");
-          console.log("usu: ", usu);
         }
       } catch (e) {
         console.log("erro usu: ", e);
+        alertDefault("Usuario", "Erro ao buscar usuário");
       }
     };
     getData().catch((error) => console.log(error));
   }, []);
 
   useEffect(() => {
-    buscarDisc();
+    if (usuLogado) buscarDisc();
   }, [usuLogado]);
 
-  const handleDeleteDisc = (id: number) =>
-  Alert.alert("Excluir Disciplina", "Deseja Mesmo Excluir Esta Disciplina?", [
-    {
-      text: "Não",
-      onPress: () => console.log("Exclusão Abortada"),
-      style: "cancel",
-    },
-    {
-      text: "Sim",
-      onPress: () => {
-        deletarDisciplina(id)
-          .then(() => {
-            console.log("Disciplina excluída com sucesso");
-            buscarDisc();
-          })
-          .catch((error) => {
-            console.log("Erro ao excluir disciplina: ", error);
-          });
+  const alertDefault = (titulo: string, mensagem: string) =>
+    Alert.alert(titulo, mensagem, [
+      {
+        text: "Fechar",
+        onPress: () => console.log("Alerta fechado"),
+        style: "cancel",
       },
-    },
-  ]);
+    ]);
+
+  const handleDeleteDisc = (id: number) =>
+    Alert.alert("Excluir Disciplina", "Deseja Mesmo Excluir Esta Disciplina?", [
+      {
+        text: "Não",
+        onPress: () => console.log("Exclusão Abortada"),
+        style: "cancel",
+      },
+      {
+        text: "Sim",
+        onPress: () => {
+          deletarDisciplina(id)
+            .then(() => {
+              console.log("Disciplina excluída com sucesso");
+              buscarDisc();
+              alertDefault("Disciplina", "Disciplina excluída com sucesso");
+            })
+            .catch((error) => {
+              console.log("Erro ao excluir disciplina: ", error);
+              alertDefault("Disciplina", "Erro ao excluir disciplina");
+            });
+        },
+      },
+    ]);
 
   function Cadastrar() {
     const dis: Disciplina = { nome: disNome, usuario_id: usuLogado?.id! };
@@ -79,7 +103,10 @@ const DisciplinaView = () => {
         console.log("Disciplina Criada!");
         buscarDisc();
       })
-      .catch((error) => console.log("Erro ao criar disciplina: ", error));
+      .catch((error) => {
+        console.log("Erro ao criar disciplina: ", error);
+        alertDefault("Disciplina", "Erro ao criar disciplina");
+      });
   }
 
   const buscarDisc = () => {
@@ -89,12 +116,12 @@ const DisciplinaView = () => {
       })
       .catch((error) => {
         console.log("Erro ao buscar disciplinas: ", error);
+        alertDefault("Disciplina", "Erro ao buscar disciplinas");
       });
   };
 
   return (
     <SafeAreaView style={styles.container}>
-
       <View style={styles.header}>
         <Image style={styles.logo} source={require("../../assets/logo.png")} />
       </View>
@@ -116,24 +143,22 @@ const DisciplinaView = () => {
         showsVerticalScrollIndicator={false}
         data={disciplinas}
         keyExtractor={(disc) => disc.id!.toString()}
+        ListEmptyComponent={listEmpy}
         renderItem={({ item }) => (
-          <DisciplinaComp 
-            data={item} 
-            onPress={() => modal()}
+          <DisciplinaComp
+            data={item}
+            onPress={() => Openmodal(item.id!)}
             onLongPress={() => handleDeleteDisc(item.id!)}
           />
-          
         )}
       />
-
       <Portal>
         <Modal
           visible={visibleModal}
-          onDismiss={modal}
+          onDismiss={Closemodal}
           contentContainerStyle={styles.modal}
-        >
-          <Text style={styles.texto1}>modal</Text>
-        </Modal>
+          children={<ConhecimentosModal disc_id={disId} onClose={Closemodal} />}
+        />
       </Portal>
     </SafeAreaView>
   );

@@ -1,5 +1,13 @@
-import React, { useEffect } from "react";
-import { Text, View, Platform, SafeAreaView, TouchableOpacity, StatusBar } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  Text,
+  View,
+  Platform,
+  SafeAreaView,
+  TouchableOpacity,
+  StatusBar,
+  Alert,
+} from "react-native";
 
 import { styles } from "./styles";
 import { useNavigation, CommonActions } from "@react-navigation/native";
@@ -26,12 +34,12 @@ const MORE_ICON = Platform.OS === "ios" ? "dots-horizontal" : "dots-vertical";
 const Personagem = () => {
   const navigation = useNavigation();
 
-  const [visibleMenu, setVisibleMenu] = React.useState(false);
-  const [visibleModal, setVisibleModal] = React.useState(false);
+  const [visibleMenu, setVisibleMenu] = useState(false);
+  const [visibleModal, setVisibleModal] = useState(false);
 
-  const [usuLogado, setUsuLogado] = React.useState<Usuario>();
+  const [usuLogado, setUsuLogado] = useState<Usuario>();
 
-  const [senha, setSenha] = React.useState("");
+  const [senha, setSenha] = useState("");
 
   const modal = () => {
     setSenha("");
@@ -51,22 +59,27 @@ const Personagem = () => {
         }
       } catch (e) {
         console.log("erro usu: ", e);
+        alertDefault('Error User', 'Erro ao buscar user');
       }
     };
     getData().catch((error) => console.log(error));
   }, []);
 
   const handleLogout = () => {
-    AsyncStorage.removeItem("@storage_Key").catch(() =>
-      console.log("Erro ao remover email")
-    );
-    menu();
-    navigation.dispatch(
-      CommonActions.navigate({
-        name: "login",
-        params: {},
+    AsyncStorage.removeItem("@storage_Key")
+      .then(() => {
+        menu();
+        navigation.dispatch(
+          CommonActions.navigate({
+            name: "login",
+            params: {},
+          })
+        );
       })
-    );
+      .catch(() => {
+        console.log("Erro ao remover email");
+        alertDefault('Logout', 'Erro ao tentar deslogar');
+      });
   };
 
   const handleAlterPassword = () => {
@@ -74,16 +87,42 @@ const Personagem = () => {
       .then(() => {
         modal();
       })
-      .catch((error) => console.log("Erro ao atualizar senha: ", error));
+      .catch((error) => {
+        console.log("Erro ao atualizar senha: ", error);
+        alertDefault('Senha', 'Erro ao atualizar senha');
+      });
   };
 
-  const handleExcludeAccount = () => {
-    if (usuLogado != null) {
-      deletarUsuario(usuLogado.id!)
-        .then(() => handleLogout())
-        .catch((error) => console.log("Erro ao excluir usuario: ", error));
-    }
-  };
+  const alertDefault = (titulo: string, mensagem: string) =>
+    Alert.alert(titulo, mensagem, [
+      {
+        text: "Fechar",
+        onPress: () => console.log("Alerta fechado"),
+        style: "cancel",
+      },
+    ]);
+
+  const handleExcludeAccount = () =>
+    Alert.alert("Excluir Usuario", " Deseja mesmo excluir seu perfil?", [
+      {
+        text: "Não",
+        onPress: () => console.log("Exclusão Abortada"),
+        style: "cancel",
+      },
+      {
+        text: "Sim",
+        onPress: () => {
+          if (usuLogado != null) {
+            deletarUsuario(usuLogado.id!)
+              .then(() => handleLogout())
+              .catch((error) => {
+                console.log("Erro ao excluir usuario: ", error);
+                alertDefault('Usuario', 'Erro ao excluir usuário');
+              });
+          }
+        },
+      },
+    ]);
 
   return (
     <SafeAreaView style={styles.containerGeral}>

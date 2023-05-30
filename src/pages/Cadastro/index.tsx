@@ -11,15 +11,19 @@ import { useState } from "react";
 import { styles } from "./styles";
 import { Usuario } from "../../model/Usuario";
 import { criarUsuario } from "../../services/usuario-service";
-import { HelperText } from "react-native-paper";
+import { HelperText, Snackbar } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Cadastro = ({ navigation }: any) => {
+
   const [usuNome, SetUsuNome] = useState("");
   const [usuEmail, SetUsuEmail] = useState("");
   const [usuSenha, SetUsuSenha] = useState("");
   const [usuTel, SetUsuTel] = useState("");
   const [usuDate, SetUsuDate] = useState("");
+
+  const [snakBar, setSnakBar] = useState(false);
+  const [mensagem, setMensagem] = useState('');
 
   function Cadastrar() {
     
@@ -33,18 +37,33 @@ const Cadastro = ({ navigation }: any) => {
 
     console.log(usu);
     criarUsuario(usu)
-      .then(() => {
-        console.log("Usuário Cadastrado");
-        AsyncStorage.setItem("@storage_Key", usuEmail).catch((error) => {
-          console.log("Erro ao guardar email");
-        });
+    .then(() => {
+      AsyncStorage.setItem("@storage_Key", usuEmail).then(() => {
         navigation.reset({
           index: 0,
           routes: [{ name: "main" }],
         });
-      })
-      .catch((error) => console.log("Deu ruim! ", error));
+      }).catch((error) =>{
+        console.log("Erro ao guardar email: ", error);
+        setMensagem('Erro ao Salvar Email!');
+        onToggleSnackBar();
+      }
+      );
+    })
+      .catch((error) => {
+        console.log("Deu ruim! ", error);
+        const erro: string = error.toString();
+        if(erro.includes('UNIQUE constraint failed: usuario.email'))
+          setMensagem('Email Já cadastrado!');
+        else
+          setMensagem('Erro ao Cadastrar Usuário!');
+
+        onToggleSnackBar();
+    });
   }
+
+  const onToggleSnackBar = () => setSnakBar(!snakBar);
+  const onDismissSnackBar = () => setSnakBar(false);
 
   const hasErrors = () => {
     const regexData = /^(0[1-9]|1\d|2\d|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
@@ -156,6 +175,19 @@ const Cadastro = ({ navigation }: any) => {
             <Text style={styles.botaoTexto}>Cadastrar</Text>
           </TouchableOpacity>
         </View>
+        <Snackbar
+          visible={snakBar}
+          onDismiss={onDismissSnackBar}
+          duration={2000}
+          action={{
+            label: "Fechar",
+            onPress: () => {
+              // Do something
+            },
+          }}
+        >
+         {mensagem}
+        </Snackbar>
       </ScrollView>
     </SafeAreaView>
   );

@@ -3,10 +3,7 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
     backgroundColor: "#F8E9B0",
-    alignItems: "center",
-    padding: 8,
   },
   header: {
     marginTop: 80,
@@ -15,6 +12,7 @@ export const styles = StyleSheet.create({
   },
   scrollView:{
     margin:0,
+    padding:0,
   },
   logo: {
     width: 150,
@@ -23,6 +21,7 @@ export const styles = StyleSheet.create({
   article: {
     justifyContent: "center",
     alignItems: "center",
+    marginBottom: 60,
   },
   //Texto acima dos input text
   texto1: {
@@ -41,14 +40,14 @@ export const styles = StyleSheet.create({
     color: "#F8E9B0",
   },
   botao: {
-    marginTop: 70,
+    marginTop: 50,
     width: 150,
     height: 40,
     borderRadius: 5,
     backgroundColor: "#813035",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 20,
+    marginBottom: 30,
   },
   botaoTexto: {
     fontWeight: "bold",
@@ -59,5 +58,10 @@ export const styles = StyleSheet.create({
     textAlign: "justify",
     width: 300,
     marginBottom: 10,
+  },
+  textoError: {
+    alignSelf: "flex-start",
+    marginBottom: 0,
+    padding: 0,
   },
 });

@@ -46,7 +46,8 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
   },
   botao: {
-    margin: 100,
+    marginTop: 100,
+    marginBottom: 65,
     width: 150,
     height: 40,
     borderRadius: 5,

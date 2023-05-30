@@ -122,6 +122,29 @@ export const atualizarSenha = (email: string, senha: string) => {
   });
 };
 
+export const resetaSenha = (email: string, dt_nasc:Date) => {
+  const senha = '123';
+  return new Promise<void>((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        `UPDATE ${table} SET senha = ? WHERE email = ? AND dt_nasc = ?`,
+        [senha, email, dt_nasc.toString()],
+        (_, { rowsAffected }) => {
+          if (rowsAffected > 0) {
+            resolve();
+          } else {
+            reject(new Error('Falha ao trocar senha'));
+          }
+        },
+        (_, error) => {
+          reject(error);
+          return true;
+        }
+      );
+    });
+  });
+};
+
 export const deletarUsuario = (id: number) => {
   return new Promise<void>((resolve, reject) => {
     db.transaction((tx) => {
