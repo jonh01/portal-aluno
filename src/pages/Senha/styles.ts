@@ -9,7 +9,12 @@ export const styles = StyleSheet.create({
     padding: 8,
   },
   header: {
+    marginTop: 80,
     marginBottom: 20,
+    alignItems: "center",
+  },
+  scrollView:{
+    margin:0,
   },
   logo: {
     width: 150,
@@ -43,6 +48,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "#813035",
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 20,
   },
   botaoTexto: {
     fontWeight: "bold",

@@ -17,6 +17,9 @@ export const styles = StyleSheet.create({
     backgroundColor: "#813035",
     justifyContent: "flex-end",
   },
+  scrollView:{
+    margin:0,
+  },
   icon:{
     backgroundColor:"#813035",
   },

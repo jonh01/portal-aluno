@@ -13,13 +13,13 @@ const db = SQLite.openDatabase(
 
 export const initDatabase = () => {
   // vetor pra excluir tabelas
-let drops: string[] = [
+/*let drops: string[] = [
     `DROP TABLE IF EXISTS conceito;`,
     `DROP TABLE IF EXISTS disciplina;`,
     `DROP TABLE IF EXISTS professor;`,
     `DROP TABLE IF EXISTS aluno;`,
     `DROP TABLE IF EXISTS usuario;`,
-  ];
+  ];*/
 
 
   let create: string[] = [
@@ -73,7 +73,7 @@ let drops: string[] = [
     console.log("Iniciando BD");
 
     // exclua as tabelas
-    for (const linha of drops) {
+    /*for (const linha of drops) {
       tx.executeSql(
         linha,
         [],
@@ -93,7 +93,7 @@ let drops: string[] = [
           return false;
         }
       );
-    }
+    }*/
 
     // cria as tabelas
     for (const linha of create) {

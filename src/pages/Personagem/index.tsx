@@ -1,14 +1,12 @@
 import React, { useEffect } from "react";
-import { Text, View, Platform, SafeAreaView } from "react-native";
+import { Text, View, Platform, SafeAreaView, TouchableOpacity, StatusBar } from "react-native";
 
 import { styles } from "./styles";
 import { useNavigation, CommonActions } from "@react-navigation/native";
 import {
   Appbar,
   Avatar,
-  Button,
   Card,
-  Divider,
   Menu,
   Modal,
   Portal,
@@ -22,8 +20,6 @@ import {
 } from "../../services/usuario-service";
 import { Usuario } from "../../model/Usuario";
 import TextView from "../../components/TextView";
-import { TouchableOpacity } from "react-native";
-import { StatusBar } from "react-native";
 
 const MORE_ICON = Platform.OS === "ios" ? "dots-horizontal" : "dots-vertical";
 
@@ -50,7 +46,6 @@ const Personagem = () => {
         const value = await AsyncStorage.getItem("@storage_Key");
         if (value != null) {
           const usu = await buscarUsuario(value);
-          setUsuLogado(usu ?? "");
           console.log("date usu: ", usu.dt_nasc);
         }
       } catch (e) {
