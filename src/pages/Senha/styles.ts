@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "#F8E9B0",
   },
   header: {
-    marginTop: 80,
+    marginTop: 88,
     marginBottom: 20,
     alignItems: "center",
   },
