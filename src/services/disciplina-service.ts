@@ -94,12 +94,12 @@ export const atualizarDisciplina = (param: Disciplina) => {
   });
 };
 
-export const deletarDisciplina = (usuario_id:number, nome:string) => {
+export const deletarDisciplina = (id:number) => {
   return new Promise<void>((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        `DELETE FROM ${table} WHERE WHERE nome = ? AND usuario_id = ?`,
-        [nome, usuario_id],
+        `DELETE FROM ${table} WHERE id = ?`,
+        [id],
         (_, { rowsAffected }) => {
           if (rowsAffected > 0) {
             resolve();

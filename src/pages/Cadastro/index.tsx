@@ -12,6 +12,7 @@ import { styles } from "./styles";
 import { Usuario } from "../../model/Usuario";
 import { criarUsuario } from "../../services/usuario-service";
 import { HelperText } from "react-native-paper";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Cadastro = ({ navigation }: any) => {
   const [usuNome, SetUsuNome] = useState("");
@@ -31,9 +32,18 @@ const Cadastro = ({ navigation }: any) => {
     };
 
     console.log(usu);
-      criarUsuario(usu)
-       .then(() => console.log("Usuário Cadastrado"))
-       .catch((error) => console.log("Deu ruim! ", error));
+    criarUsuario(usu)
+      .then(() => {
+        console.log("Usuário Cadastrado");
+        AsyncStorage.setItem("@storage_Key", usuEmail).catch((error) => {
+          console.log("Erro ao guardar email");
+        });
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "main" }],
+        });
+      })
+      .catch((error) => console.log("Deu ruim! ", error));
   }
 
   const hasErrors = () => {
@@ -41,13 +51,13 @@ const Cadastro = ({ navigation }: any) => {
     return !regexData.test(usuDate);
   };
 
-  const converter = (data:string) => {
-    const partes = data.split('/');
+  const converter = (data: string) => {
+    const partes = data.split("/");
     const dia = parseInt(partes[0], 10);
     const mes = parseInt(partes[1], 10) - 1; // Os meses no JavaScript são baseados em zero
     const ano = parseInt(partes[2], 10);
     return new Date(ano, mes, dia);
-  }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -70,7 +80,11 @@ const Cadastro = ({ navigation }: any) => {
             onChangeText={SetUsuNome}
             value={usuNome}
           />
-          <HelperText style={styles.textoError} type="error" visible={usuNome == null}>
+          <HelperText
+            style={styles.textoError}
+            type="error"
+            visible={usuNome == null}
+          >
             O nome está no formato incorreto!
           </HelperText>
 
@@ -81,7 +95,11 @@ const Cadastro = ({ navigation }: any) => {
             onChangeText={SetUsuDate}
             value={usuDate}
           />
-          <HelperText style={styles.textoError} type="error" visible={hasErrors() && usuDate != ''}>
+          <HelperText
+            style={styles.textoError}
+            type="error"
+            visible={hasErrors() && usuDate != ""}
+          >
             Data incorreta! Formato: dd/MM/yyyy
           </HelperText>
 
@@ -92,7 +110,11 @@ const Cadastro = ({ navigation }: any) => {
             onChangeText={SetUsuTel}
             value={usuTel}
           />
-          <HelperText style={styles.textoError} type="error" visible={usuTel == null}>
+          <HelperText
+            style={styles.textoError}
+            type="error"
+            visible={usuTel == null}
+          >
             O telefone está no formato incorreto!
           </HelperText>
 
@@ -103,7 +125,11 @@ const Cadastro = ({ navigation }: any) => {
             onChangeText={SetUsuEmail}
             value={usuEmail}
           />
-          <HelperText style={styles.textoError} type="error" visible={usuEmail == null}>
+          <HelperText
+            style={styles.textoError}
+            type="error"
+            visible={usuEmail == null}
+          >
             O email está no formato incorreto!
           </HelperText>
 
@@ -114,11 +140,19 @@ const Cadastro = ({ navigation }: any) => {
             onChangeText={SetUsuSenha}
             value={usuSenha}
           />
-          <HelperText style={styles.textoError} type="error" visible={usuSenha == null}>
+          <HelperText
+            style={styles.textoError}
+            type="error"
+            visible={usuSenha == null}
+          >
             Mínimo de 8 caracteres!
           </HelperText>
 
-          <TouchableOpacity style={styles.botao} onPress={Cadastrar} disabled={hasErrors()}>
+          <TouchableOpacity
+            style={styles.botao}
+            onPress={Cadastrar}
+            disabled={hasErrors()}
+          >
             <Text style={styles.botaoTexto}>Cadastrar</Text>
           </TouchableOpacity>
         </View>

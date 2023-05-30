@@ -5,9 +5,11 @@ import { useEffect, useState } from "react";
 
 export const Routes = () => {
 
-    const [isLoggedIn, setLoggedIn] = useState(false);
+    // futuramente simular login
+    const [isLoggedIn, setLoggedIn] = useState<boolean>();
   
     useEffect(() => {
+        setLoggedIn(false);
     }, []);
 
     return (

@@ -6,6 +6,7 @@ import { Text, TextInput, View, Image, TouchableOpacity } from "react-native";
 import {
   CriarDisciplina,
   buscarDisciplinasUser,
+  deletarDisciplina,
 } from "../../services/disciplina-service";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Disciplina } from "../../model/Disciplina";
@@ -15,6 +16,7 @@ import { buscarUsuario } from "../../services/usuario-service";
 import { FlatList } from "react-native";
 import DisciplinaComp from "../../components/DisciplinaComp";
 import { Modal, Portal } from "react-native-paper";
+import { Alert } from "react-native";
 
 const DisciplinaView = () => {
   const [usuLogado, setUsuLogado] = useState<Usuario>();
@@ -35,7 +37,7 @@ const DisciplinaView = () => {
         if (value != null) {
           const usu = await buscarUsuario(value);
           setUsuLogado(usu ?? "");
-          console.log("date usu: ", usu.dt_nasc);
+          console.log("usu: ", usu);
         }
       } catch (e) {
         console.log("erro usu: ", e);
@@ -43,6 +45,32 @@ const DisciplinaView = () => {
     };
     getData().catch((error) => console.log(error));
   }, []);
+
+  useEffect(() => {
+    buscarDisc();
+  }, [usuLogado]);
+
+  const handleDeleteDisc = (id: number) =>
+  Alert.alert("Excluir Disciplina", "Deseja Mesmo Excluir Esta Disciplina?", [
+    {
+      text: "Não",
+      onPress: () => console.log("Exclusão Abortada"),
+      style: "cancel",
+    },
+    {
+      text: "Sim",
+      onPress: () => {
+        deletarDisciplina(id)
+          .then(() => {
+            console.log("Disciplina excluída com sucesso");
+            buscarDisc();
+          })
+          .catch((error) => {
+            console.log("Erro ao excluir disciplina: ", error);
+          });
+      },
+    },
+  ]);
 
   function Cadastrar() {
     const dis: Disciplina = { nome: disNome, usuario_id: usuLogado?.id! };
@@ -92,7 +120,9 @@ const DisciplinaView = () => {
           <DisciplinaComp 
             data={item} 
             onPress={() => modal()}
+            onLongPress={() => handleDeleteDisc(item.id!)}
           />
+          
         )}
       />
 
