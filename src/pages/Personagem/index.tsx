@@ -153,7 +153,7 @@ const Personagem = () => {
         <Card style={styles.card}>
           <Card.Content>
             <TextView
-              texto="Data de Nascimento: "
+              texto="Nascimento: "
               value={usuLogado ? usuLogado.dt_nasc.toLocaleDateString() : ""}
             />
             <TextView

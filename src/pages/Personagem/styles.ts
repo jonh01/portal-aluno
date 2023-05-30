@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
   },
   card:{
     marginTop:50,
-    justifyContent: "center",
+    alignItems: 'center',
     minHeight: 200,
     
   },
